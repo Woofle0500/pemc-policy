@@ -1,0 +1,16 @@
+# Credentials, in case something writes them locally
+.env
+*.pem
+*.key
+credentials
+
+# IDEs and Editors
+.vscode/
+.claude/
+.idea/
+*.swp
+*.swo
+
+# OS Files
+.DS_Store
+Thumbs.db
