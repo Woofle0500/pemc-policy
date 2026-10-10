@@ -40,7 +40,7 @@ test_unsupported_labels_state_passes if {
 	r := resource("aws", "create", "unsupported", {})
 	count(findings(r)) == 0
 }
- 
+
 test_unknown_labels_state_denied if {
 	r := resource("aws", "create", "unknown", {})
 	fs := findings(r)
