@@ -1,3 +1,28 @@
+# Terraform state - contains secrets
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Local state lock
+.terraform.tfstate.lock.info
+
+# Provider binaries and module cache
+.terraform/
+
+# Variable files - often contain account IDs, sometimes secrets
+*.tfvars
+*.tfvars.json
+!example.tfvars
+
+# Plan files — full topology in binary form
+*.tfplan
+plan.out
+tfplan*
+
+# Crash logs
+crash.log
+crash.*.log
+
 # Credentials, in case something writes them locally
 .env
 *.pem
@@ -14,3 +39,5 @@ credentials
 # OS Files
 .DS_Store
 Thumbs.db
+
+ignored/
