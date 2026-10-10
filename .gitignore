@@ -39,3 +39,5 @@ credentials
 # OS Files
 .DS_Store
 Thumbs.db
+
+ignored/
