@@ -1,0 +1,3 @@
+package common.required_labels_test
+
+import data.common.required_labels
