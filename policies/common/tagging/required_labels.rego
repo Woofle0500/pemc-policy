@@ -53,7 +53,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": r.address,
-		"message": sprintf("label %q value %q is not allowed, expected one of %v", [key, value, sort(allowed_environments)]),
+		"message": sprintf("label %q has a value that is not allowed, expected one of %v", [key, sort(allowed_environments)]),
 	}
 }
 

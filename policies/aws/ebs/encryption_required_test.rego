@@ -44,3 +44,15 @@ test_encrypted_false_delete_passes if {
 test_encrypted_false_forget_passes if {
 	count(encryption_required.deny) == 0 with input as plan("forget", {"encrypted": false}, {})
 }
+
+test_non_ebs_resource_encrypted_false_passes if {
+	p := {"resources": [{
+		"address": "aws_rds_cluster.main",
+		"type": "aws_rds_cluster",
+		"provider": "aws",
+		"action": "create",
+		"config": {"encrypted": false},
+		"unknown": {},
+	}]}
+	count(encryption_required.deny) == 0 with input as p
+}

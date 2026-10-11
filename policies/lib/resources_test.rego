@@ -51,3 +51,13 @@ test_is_set_false_when_null if {
 test_is_set_false_when_absent if {
 	not lib.is_set(res("create", {}, {}), "kms_key_id")
 }
+
+test_is_set_when_sensitive if {
+	r := object.union(res("create", {}, {}), {"sensitive": {"kms_key_id": true}})
+	lib.is_set(r, "kms_key_id")
+}
+
+test_is_set_false_when_sensitive_false if {
+	r := object.union(res("create", {}, {}), {"sensitive": {"kms_key_id": false}})
+	not lib.is_set(r, "kms_key_id")
+}
