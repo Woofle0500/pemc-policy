@@ -2,15 +2,10 @@ package lib
 
 removed := {"delete", "forget"}
 
-evaluated := {r |
+evaluated contains r if {
 	some r in input.resources
 	not r.action in removed
 }
-
-# evaluated contains r if {
-# 	some r in input.resources
-# 	not r.action in removed
-# }
 
 is_true(r, attr) if {
 	r.config[attr] == true
