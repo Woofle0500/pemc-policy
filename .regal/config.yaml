@@ -5,3 +5,14 @@ rules:
   idiomatic:
     directory-package-mismatch:
       level: ignore
+  performance:
+    non-loop-expression:
+      level: error
+      ignore:
+        files:
+          - "*_test.rego"
+    with-outside-test-context:
+      level: error
+      ignore:
+        files:
+          - "*_test.rego"

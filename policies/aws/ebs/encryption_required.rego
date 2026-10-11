@@ -2,6 +2,9 @@ package aws.ebs.encryption_required
 
 import data.lib
 
+# METADATA
+# scope: document
+# entrypoint: true
 deny contains finding if {
 	some r in lib.evaluated
 	r.type == "aws_ebs_volume"

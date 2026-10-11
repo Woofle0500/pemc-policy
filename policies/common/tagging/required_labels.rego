@@ -15,7 +15,10 @@ required_names := {"owner", "environment", "cost-center"}
 
 allowed_environments := {"platform", "sandbox"}
 
-# Labels that can't be read at plan time can't be verified.
+# METADATA
+# description: Labels that can't be read at plan time can't be verified.
+# scope: document
+# entrypoint: true
 deny contains finding if {
 	some r in lib.evaluated
 	r.labels_state == "unknown"
