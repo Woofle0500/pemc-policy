@@ -36,28 +36,28 @@ test_is_true_false_when_absent if {
 	not lib.is_true(res("create", {}, {}), "encrypted")
 }
 
-test_is_set_when_known_value if {
-	lib.is_set(res("create", {"kms_key_id": "k"}, {}), "kms_key_id")
+test_is_attr_set_when_known_value if {
+	lib.is_attr_set(res("create", {"kms_key_id": "k"}, {}), "kms_key_id")
 }
 
-test_is_set_when_unknown_after_apply if {
-	lib.is_set(res("create", {}, {"kms_key_id": true}), "kms_key_id")
+test_is_attr_set_when_unknown_after_apply if {
+	lib.is_attr_set(res("create", {}, {"kms_key_id": true}), "kms_key_id")
 }
 
-test_is_set_false_when_null if {
-	not lib.is_set(res("create", {"kms_key_id": null}, {}), "kms_key_id")
+test_is_attr_set_false_when_null if {
+	not lib.is_attr_set(res("create", {"kms_key_id": null}, {}), "kms_key_id")
 }
 
-test_is_set_false_when_absent if {
-	not lib.is_set(res("create", {}, {}), "kms_key_id")
+test_is_attr_set_false_when_absent if {
+	not lib.is_attr_set(res("create", {}, {}), "kms_key_id")
 }
 
-test_is_set_when_sensitive if {
+test_is_attr_set_when_sensitive if {
 	r := object.union(res("create", {}, {}), {"sensitive": {"kms_key_id": true}})
-	lib.is_set(r, "kms_key_id")
+	lib.is_attr_set(r, "kms_key_id")
 }
 
-test_is_set_false_when_sensitive_false if {
+test_is_attr_set_false_when_sensitive_false if {
 	r := object.union(res("create", {}, {}), {"sensitive": {"kms_key_id": false}})
-	not lib.is_set(r, "kms_key_id")
+	not lib.is_attr_set(r, "kms_key_id")
 }

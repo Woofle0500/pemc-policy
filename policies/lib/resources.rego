@@ -2,7 +2,7 @@ package lib
 
 removed := {"delete", "forget"}
 
-evaluated := {r |
+evaluated contains r if {
 	some r in input.resources
 	not r.action in removed
 }
@@ -12,11 +12,11 @@ is_true(r, attr) if {
 	not r.unknown[attr]
 }
 
-is_set(r, attr) if {
+is_attr_set(r, attr) if {
 	r.config[attr] != null
 	not r.unknown[attr]
 }
 
-is_set(r, attr) if r.unknown[attr] == true
+is_attr_set(r, attr) if r.unknown[attr] == true
 
-is_set(r, attr) if r.sensitive[attr] == true
+is_attr_set(r, attr) if r.sensitive[attr] == true

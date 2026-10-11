@@ -10,7 +10,11 @@ allowed_actions := {"create", "update", "replace", "delete", "forget", "no-op"}
 
 allowed_labels_states := {"known", "unknown", "unsupported"}
 
-# Unsupported (or absent) schema version, reported once for the whole input.
+# METADATA
+# description: >-
+#   Unsupported (or absent) schema version, reported once for the whole input.
+# scope: document
+# entrypoint: true
 deny contains finding if {
 	not input.meta.schema_version == supported_schema_version
 	finding := {

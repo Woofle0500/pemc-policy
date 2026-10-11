@@ -62,10 +62,10 @@ test_wrong_schema_version_denied if {
 	p := {"meta": object.union(meta, {"schema_version": 2}), "resources": [resource]}
 	fs := findings(p)
 	count(fs) == 1
+	mentions(fs, "schema_version 2")
 	some f in fs
 	f.policy_id == "common.input.schema_valid"
 	f.address == "<input>"
-	mentions(fs, "schema_version 2")
 }
 
 test_string_schema_version_denied if {
@@ -100,9 +100,9 @@ test_missing_address_denied_with_index_placeholder if {
 	bad := object.remove(resource, ["address"])
 	fs := findings(plan([ok, ok, bad]))
 	count(fs) == 1
+	mentions(fs, "address")
 	some f in fs
 	f.address == "missing <resource[2]>"
-	mentions(fs, "address")
 }
 
 test_missing_type_denied if {
@@ -166,9 +166,9 @@ test_one_finding_per_broken_resource if {
 test_invalid_action_denied if {
 	fs := findings(plan([object.union(resource, {"action": "destroy"})]))
 	count(fs) == 1
+	mentions(fs, "invalid action destroy")
 	some f in fs
 	f.address == "aws_ebs_volume.data"
-	mentions(fs, "invalid action destroy")
 }
 
 test_action_is_case_sensitive if {
@@ -191,9 +191,9 @@ test_invalid_action_one_finding_per_resource if {
 test_invalid_labels_state_denied if {
 	fs := findings(plan([object.union(resource, {"labels_state": "maybe"})]))
 	count(fs) == 1
+	mentions(fs, "invalid labels_state maybe")
 	some f in fs
 	f.address == "aws_ebs_volume.data"
-	mentions(fs, "invalid labels_state maybe")
 }
 
 test_labels_state_is_case_sensitive if {
