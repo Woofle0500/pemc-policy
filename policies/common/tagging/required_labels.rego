@@ -8,6 +8,7 @@ policy_id := "common.tagging.required_labels"
 prefixes := {
 	"aws": "pemc:",
 	"google": "pemc-",
+	"google-beta": "pemc-",
 }
 
 required_names := {"owner", "environment", "cost-center"}
@@ -52,7 +53,19 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": r.address,
-		"message": sprintf("label %q value %q is not allowed, expected one of %v", [key, value, sort(allowed_environments)]),
+		"message": sprintf("label %q has a value that is not allowed, expected one of %v", [key, sort(allowed_environments)]),
+	}
+}
+
+# unknown identifier is denied
+deny contains finding if {
+	some r in lib.evaluated
+	r.labels_state == "known"
+	not prefixes[r.provider]
+	finding := {
+		"policy_id": policy_id,
+		"address": r.address,
+		"message": sprintf("no label convention defined for provider %s", [r.provider]),
 	}
 }
 

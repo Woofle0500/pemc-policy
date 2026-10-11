@@ -115,14 +115,16 @@ test_aws_prod_environment_denied if {
 	r := resource("aws", "create", "known", object.union(aws_labels, {"pemc:environment": "prod"}))
 	fs := findings(r)
 	count(fs) == 1
-	mentions(fs, "prod")
+	mentions(fs, "pemc:environment")
+	not mentions(fs, "prod")
 }
 
 test_google_prod_environment_denied if {
 	r := resource("google", "create", "known", object.union(gcp_labels, {"pemc-environment": "prod"}))
 	fs := findings(r)
 	count(fs) == 1
-	mentions(fs, "prod")
+	mentions(fs, "pemc-environment")
+	not mentions(fs, "prod")
 }
 
 test_aws_environment_null_denied if {

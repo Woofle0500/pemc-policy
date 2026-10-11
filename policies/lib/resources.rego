@@ -18,3 +18,5 @@ is_set(r, attr) if {
 }
 
 is_set(r, attr) if r.unknown[attr] == true
+
+is_set(r, attr) if r.sensitive[attr] == true
