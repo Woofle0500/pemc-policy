@@ -1,0 +1,7 @@
+rules:
+  custom:
+    naming-convention:
+      level: ignore
+  idiomatic:
+    directory-package-mismatch:
+      level: ignore
