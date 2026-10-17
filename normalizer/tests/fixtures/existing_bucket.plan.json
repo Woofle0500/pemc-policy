@@ -1,0 +1,1133 @@
+{
+	"format_version": "1.2",
+	"terraform_version": "1.15.9",
+	"variables": {
+		"bucket_name": {
+			"value": "woofle-pemc-sandbox-storage"
+		},
+		"kms_key_alias": {
+			"value": "alias/woofle-pemc-s3"
+		},
+		"versioning_enabled": {
+			"value": true
+		}
+	},
+	"planned_values": {
+		"outputs": {
+			"bucket_arn": {
+				"sensitive": false,
+				"type": "string",
+				"value": "arn:aws:s3:::woofle-pemc-sandbox-storage"
+			},
+			"bucket_id": {
+				"sensitive": false,
+				"type": "string",
+				"value": "woofle-pemc-sandbox-storage"
+			}
+		},
+		"root_module": {
+			"child_modules": [
+				{
+					"resources": [
+						{
+							"address": "module.storage.aws_s3_bucket.this",
+							"mode": "managed",
+							"type": "aws_s3_bucket",
+							"name": "this",
+							"provider_name": "registry.terraform.io/hashicorp/aws",
+							"schema_version": 0,
+							"values": {
+								"acceleration_status": "",
+								"acl": null,
+								"arn": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+								"bucket": "woofle-pemc-sandbox-storage",
+								"bucket_domain_name": "woofle-pemc-sandbox-storage.s3.amazonaws.com",
+								"bucket_namespace": "global",
+								"bucket_prefix": "",
+								"bucket_region": "ap-south-1",
+								"bucket_regional_domain_name": "woofle-pemc-sandbox-storage.s3.ap-south-1.amazonaws.com",
+								"cors_rule": [],
+								"force_destroy": false,
+								"grant": [
+									{
+										"id": "babf0efecbb48e2d3fca1499e949cd87a81123a5a439403316e58d3312a94bc0",
+										"permissions": ["FULL_CONTROL"],
+										"type": "CanonicalUser",
+										"uri": ""
+									}
+								],
+								"hosted_zone_id": "Z11RGJOFQNVJUP",
+								"id": "woofle-pemc-sandbox-storage",
+								"lifecycle_rule": [],
+								"logging": [],
+								"object_lock_configuration": [],
+								"object_lock_enabled": false,
+								"policy": "",
+								"region": "ap-south-1",
+								"replication_configuration": [],
+								"request_payer": "BucketOwner",
+								"server_side_encryption_configuration": [
+									{
+										"rule": [
+											{
+												"apply_server_side_encryption_by_default": [
+													{
+														"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+														"sse_algorithm": "aws:kms"
+													}
+												],
+												"bucket_key_enabled": true
+											}
+										]
+									}
+								],
+								"tags": {},
+								"tags_all": {
+									"pemc:cost-center": "sre",
+									"pemc:environment": "sandbox",
+									"pemc:managed-by": "terraform",
+									"pemc:owner": "woofle"
+								},
+								"timeouts": null,
+								"versioning": [
+									{
+										"enabled": true,
+										"mfa_delete": false
+									}
+								],
+								"website": [],
+								"website_domain": null,
+								"website_endpoint": null
+							},
+							"sensitive_values": {
+								"cors_rule": [],
+								"grant": [
+									{
+										"permissions": [false]
+									}
+								],
+								"lifecycle_rule": [],
+								"logging": [],
+								"object_lock_configuration": [],
+								"replication_configuration": [],
+								"server_side_encryption_configuration": [
+									{
+										"rule": [
+											{
+												"apply_server_side_encryption_by_default": [
+													{}
+												]
+											}
+										]
+									}
+								],
+								"tags": {},
+								"tags_all": {},
+								"versioning": [{}],
+								"website": []
+							},
+							"identity_schema_version": 0,
+							"identity": {
+								"account_id": "782747473473",
+								"bucket": "woofle-pemc-sandbox-storage",
+								"region": "ap-south-1"
+							}
+						},
+						{
+							"address": "module.storage.aws_s3_bucket_public_access_block.this",
+							"mode": "managed",
+							"type": "aws_s3_bucket_public_access_block",
+							"name": "this",
+							"provider_name": "registry.terraform.io/hashicorp/aws",
+							"schema_version": 0,
+							"values": {
+								"block_public_acls": true,
+								"block_public_policy": true,
+								"bucket": "woofle-pemc-sandbox-storage",
+								"id": "woofle-pemc-sandbox-storage",
+								"ignore_public_acls": true,
+								"region": "ap-south-1",
+								"restrict_public_buckets": true,
+								"skip_destroy": null
+							},
+							"sensitive_values": {},
+							"identity_schema_version": 0,
+							"identity": {
+								"account_id": "782747473473",
+								"bucket": "woofle-pemc-sandbox-storage",
+								"region": "ap-south-1"
+							}
+						},
+						{
+							"address": "module.storage.aws_s3_bucket_server_side_encryption_configuration.this",
+							"mode": "managed",
+							"type": "aws_s3_bucket_server_side_encryption_configuration",
+							"name": "this",
+							"provider_name": "registry.terraform.io/hashicorp/aws",
+							"schema_version": 0,
+							"values": {
+								"bucket": "woofle-pemc-sandbox-storage",
+								"expected_bucket_owner": "",
+								"id": "woofle-pemc-sandbox-storage",
+								"region": "ap-south-1",
+								"rule": [
+									{
+										"apply_server_side_encryption_by_default": [
+											{
+												"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+												"sse_algorithm": "aws:kms"
+											}
+										],
+										"blocked_encryption_types": ["SSE-C"],
+										"bucket_key_enabled": true
+									}
+								]
+							},
+							"sensitive_values": {
+								"rule": [
+									{
+										"apply_server_side_encryption_by_default": [
+											{}
+										],
+										"blocked_encryption_types": [false]
+									}
+								]
+							},
+							"identity_schema_version": 1,
+							"identity": {
+								"account_id": "782747473473",
+								"bucket": "woofle-pemc-sandbox-storage",
+								"region": "ap-south-1"
+							}
+						},
+						{
+							"address": "module.storage.aws_s3_bucket_versioning.this",
+							"mode": "managed",
+							"type": "aws_s3_bucket_versioning",
+							"name": "this",
+							"provider_name": "registry.terraform.io/hashicorp/aws",
+							"schema_version": 0,
+							"values": {
+								"bucket": "woofle-pemc-sandbox-storage",
+								"expected_bucket_owner": "",
+								"id": "woofle-pemc-sandbox-storage",
+								"mfa": null,
+								"region": "ap-south-1",
+								"versioning_configuration": [
+									{
+										"mfa_delete": "Disabled",
+										"status": "Enabled"
+									}
+								]
+							},
+							"sensitive_values": {
+								"versioning_configuration": [{}]
+							},
+							"identity_schema_version": 1,
+							"identity": {
+								"account_id": "782747473473",
+								"bucket": "woofle-pemc-sandbox-storage",
+								"region": "ap-south-1"
+							}
+						}
+					],
+					"address": "module.storage"
+				}
+			]
+		}
+	},
+	"resource_changes": [
+		{
+			"address": "module.storage.aws_s3_bucket.this",
+			"module_address": "module.storage",
+			"mode": "managed",
+			"type": "aws_s3_bucket",
+			"name": "this",
+			"provider_name": "registry.terraform.io/hashicorp/aws",
+			"change": {
+				"actions": ["no-op"],
+				"before": {
+					"acceleration_status": "",
+					"acl": null,
+					"arn": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"bucket_domain_name": "woofle-pemc-sandbox-storage.s3.amazonaws.com",
+					"bucket_namespace": "global",
+					"bucket_prefix": "",
+					"bucket_region": "ap-south-1",
+					"bucket_regional_domain_name": "woofle-pemc-sandbox-storage.s3.ap-south-1.amazonaws.com",
+					"cors_rule": [],
+					"force_destroy": false,
+					"grant": [
+						{
+							"id": "babf0efecbb48e2d3fca1499e949cd87a81123a5a439403316e58d3312a94bc0",
+							"permissions": ["FULL_CONTROL"],
+							"type": "CanonicalUser",
+							"uri": ""
+						}
+					],
+					"hosted_zone_id": "Z11RGJOFQNVJUP",
+					"id": "woofle-pemc-sandbox-storage",
+					"lifecycle_rule": [],
+					"logging": [],
+					"object_lock_configuration": [],
+					"object_lock_enabled": false,
+					"policy": "",
+					"region": "ap-south-1",
+					"replication_configuration": [],
+					"request_payer": "BucketOwner",
+					"server_side_encryption_configuration": [
+						{
+							"rule": [
+								{
+									"apply_server_side_encryption_by_default": [
+										{
+											"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+											"sse_algorithm": "aws:kms"
+										}
+									],
+									"bucket_key_enabled": true
+								}
+							]
+						}
+					],
+					"tags": {},
+					"tags_all": {
+						"pemc:cost-center": "sre",
+						"pemc:environment": "sandbox",
+						"pemc:managed-by": "terraform",
+						"pemc:owner": "woofle"
+					},
+					"timeouts": null,
+					"versioning": [
+						{
+							"enabled": true,
+							"mfa_delete": false
+						}
+					],
+					"website": [],
+					"website_domain": null,
+					"website_endpoint": null
+				},
+				"after": {
+					"acceleration_status": "",
+					"acl": null,
+					"arn": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"bucket_domain_name": "woofle-pemc-sandbox-storage.s3.amazonaws.com",
+					"bucket_namespace": "global",
+					"bucket_prefix": "",
+					"bucket_region": "ap-south-1",
+					"bucket_regional_domain_name": "woofle-pemc-sandbox-storage.s3.ap-south-1.amazonaws.com",
+					"cors_rule": [],
+					"force_destroy": false,
+					"grant": [
+						{
+							"id": "babf0efecbb48e2d3fca1499e949cd87a81123a5a439403316e58d3312a94bc0",
+							"permissions": ["FULL_CONTROL"],
+							"type": "CanonicalUser",
+							"uri": ""
+						}
+					],
+					"hosted_zone_id": "Z11RGJOFQNVJUP",
+					"id": "woofle-pemc-sandbox-storage",
+					"lifecycle_rule": [],
+					"logging": [],
+					"object_lock_configuration": [],
+					"object_lock_enabled": false,
+					"policy": "",
+					"region": "ap-south-1",
+					"replication_configuration": [],
+					"request_payer": "BucketOwner",
+					"server_side_encryption_configuration": [
+						{
+							"rule": [
+								{
+									"apply_server_side_encryption_by_default": [
+										{
+											"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+											"sse_algorithm": "aws:kms"
+										}
+									],
+									"bucket_key_enabled": true
+								}
+							]
+						}
+					],
+					"tags": {},
+					"tags_all": {
+						"pemc:cost-center": "sre",
+						"pemc:environment": "sandbox",
+						"pemc:managed-by": "terraform",
+						"pemc:owner": "woofle"
+					},
+					"timeouts": null,
+					"versioning": [
+						{
+							"enabled": true,
+							"mfa_delete": false
+						}
+					],
+					"website": [],
+					"website_domain": null,
+					"website_endpoint": null
+				},
+				"after_unknown": {},
+				"before_sensitive": {
+					"cors_rule": [],
+					"grant": [
+						{
+							"permissions": [false]
+						}
+					],
+					"lifecycle_rule": [],
+					"logging": [],
+					"object_lock_configuration": [],
+					"replication_configuration": [],
+					"server_side_encryption_configuration": [
+						{
+							"rule": [
+								{
+									"apply_server_side_encryption_by_default": [
+										{}
+									]
+								}
+							]
+						}
+					],
+					"tags": {},
+					"tags_all": {},
+					"versioning": [{}],
+					"website": []
+				},
+				"after_sensitive": {
+					"cors_rule": [],
+					"grant": [
+						{
+							"permissions": [false]
+						}
+					],
+					"lifecycle_rule": [],
+					"logging": [],
+					"object_lock_configuration": [],
+					"replication_configuration": [],
+					"server_side_encryption_configuration": [
+						{
+							"rule": [
+								{
+									"apply_server_side_encryption_by_default": [
+										{}
+									]
+								}
+							]
+						}
+					],
+					"tags": {},
+					"tags_all": {},
+					"versioning": [{}],
+					"website": []
+				},
+				"before_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				},
+				"after_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				}
+			}
+		},
+		{
+			"address": "module.storage.aws_s3_bucket_public_access_block.this",
+			"module_address": "module.storage",
+			"mode": "managed",
+			"type": "aws_s3_bucket_public_access_block",
+			"name": "this",
+			"provider_name": "registry.terraform.io/hashicorp/aws",
+			"change": {
+				"actions": ["no-op"],
+				"before": {
+					"block_public_acls": true,
+					"block_public_policy": true,
+					"bucket": "woofle-pemc-sandbox-storage",
+					"id": "woofle-pemc-sandbox-storage",
+					"ignore_public_acls": true,
+					"region": "ap-south-1",
+					"restrict_public_buckets": true,
+					"skip_destroy": null
+				},
+				"after": {
+					"block_public_acls": true,
+					"block_public_policy": true,
+					"bucket": "woofle-pemc-sandbox-storage",
+					"id": "woofle-pemc-sandbox-storage",
+					"ignore_public_acls": true,
+					"region": "ap-south-1",
+					"restrict_public_buckets": true,
+					"skip_destroy": null
+				},
+				"after_unknown": {},
+				"before_sensitive": {},
+				"after_sensitive": {},
+				"before_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				},
+				"after_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				}
+			}
+		},
+		{
+			"address": "module.storage.aws_s3_bucket_server_side_encryption_configuration.this",
+			"module_address": "module.storage",
+			"mode": "managed",
+			"type": "aws_s3_bucket_server_side_encryption_configuration",
+			"name": "this",
+			"provider_name": "registry.terraform.io/hashicorp/aws",
+			"change": {
+				"actions": ["no-op"],
+				"before": {
+					"bucket": "woofle-pemc-sandbox-storage",
+					"expected_bucket_owner": "",
+					"id": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1",
+					"rule": [
+						{
+							"apply_server_side_encryption_by_default": [
+								{
+									"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+									"sse_algorithm": "aws:kms"
+								}
+							],
+							"blocked_encryption_types": ["SSE-C"],
+							"bucket_key_enabled": true
+						}
+					]
+				},
+				"after": {
+					"bucket": "woofle-pemc-sandbox-storage",
+					"expected_bucket_owner": "",
+					"id": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1",
+					"rule": [
+						{
+							"apply_server_side_encryption_by_default": [
+								{
+									"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+									"sse_algorithm": "aws:kms"
+								}
+							],
+							"blocked_encryption_types": ["SSE-C"],
+							"bucket_key_enabled": true
+						}
+					]
+				},
+				"after_unknown": {},
+				"before_sensitive": {
+					"rule": [
+						{
+							"apply_server_side_encryption_by_default": [{}],
+							"blocked_encryption_types": [false]
+						}
+					]
+				},
+				"after_sensitive": {
+					"rule": [
+						{
+							"apply_server_side_encryption_by_default": [{}],
+							"blocked_encryption_types": [false]
+						}
+					]
+				},
+				"before_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				},
+				"after_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				}
+			}
+		},
+		{
+			"address": "module.storage.aws_s3_bucket_versioning.this",
+			"module_address": "module.storage",
+			"mode": "managed",
+			"type": "aws_s3_bucket_versioning",
+			"name": "this",
+			"provider_name": "registry.terraform.io/hashicorp/aws",
+			"change": {
+				"actions": ["no-op"],
+				"before": {
+					"bucket": "woofle-pemc-sandbox-storage",
+					"expected_bucket_owner": "",
+					"id": "woofle-pemc-sandbox-storage",
+					"mfa": null,
+					"region": "ap-south-1",
+					"versioning_configuration": [
+						{
+							"mfa_delete": "Disabled",
+							"status": "Enabled"
+						}
+					]
+				},
+				"after": {
+					"bucket": "woofle-pemc-sandbox-storage",
+					"expected_bucket_owner": "",
+					"id": "woofle-pemc-sandbox-storage",
+					"mfa": null,
+					"region": "ap-south-1",
+					"versioning_configuration": [
+						{
+							"mfa_delete": "Disabled",
+							"status": "Enabled"
+						}
+					]
+				},
+				"after_unknown": {},
+				"before_sensitive": {
+					"versioning_configuration": [{}]
+				},
+				"after_sensitive": {
+					"versioning_configuration": [{}]
+				},
+				"before_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				},
+				"after_identity": {
+					"account_id": "782747473473",
+					"bucket": "woofle-pemc-sandbox-storage",
+					"region": "ap-south-1"
+				}
+			}
+		}
+	],
+	"output_changes": {
+		"bucket_arn": {
+			"actions": ["no-op"],
+			"before": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+			"after": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+			"after_unknown": false,
+			"before_sensitive": false,
+			"after_sensitive": false
+		},
+		"bucket_id": {
+			"actions": ["no-op"],
+			"before": "woofle-pemc-sandbox-storage",
+			"after": "woofle-pemc-sandbox-storage",
+			"after_unknown": false,
+			"before_sensitive": false,
+			"after_sensitive": false
+		}
+	},
+	"prior_state": {
+		"format_version": "1.0",
+		"terraform_version": "1.15.9",
+		"values": {
+			"outputs": {
+				"bucket_arn": {
+					"sensitive": false,
+					"value": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+					"type": "string"
+				},
+				"bucket_id": {
+					"sensitive": false,
+					"value": "woofle-pemc-sandbox-storage",
+					"type": "string"
+				}
+			},
+			"root_module": {
+				"resources": [
+					{
+						"address": "data.aws_kms_alias.storage",
+						"mode": "data",
+						"type": "aws_kms_alias",
+						"name": "storage",
+						"provider_name": "registry.terraform.io/hashicorp/aws",
+						"schema_version": 0,
+						"values": {
+							"arn": "arn:aws:kms:ap-south-1:782747473473:alias/woofle-pemc-s3",
+							"id": "arn:aws:kms:ap-south-1:782747473473:alias/woofle-pemc-s3",
+							"name": "alias/woofle-pemc-s3",
+							"region": "ap-south-1",
+							"target_key_arn": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+							"target_key_id": "937678ff-6117-4676-a176-3771f559c730"
+						},
+						"sensitive_values": {}
+					}
+				],
+				"child_modules": [
+					{
+						"resources": [
+							{
+								"address": "module.storage.aws_s3_bucket.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket",
+								"name": "this",
+								"provider_name": "registry.terraform.io/hashicorp/aws",
+								"schema_version": 0,
+								"values": {
+									"acceleration_status": "",
+									"acl": null,
+									"arn": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+									"bucket": "woofle-pemc-sandbox-storage",
+									"bucket_domain_name": "woofle-pemc-sandbox-storage.s3.amazonaws.com",
+									"bucket_namespace": "global",
+									"bucket_prefix": "",
+									"bucket_region": "ap-south-1",
+									"bucket_regional_domain_name": "woofle-pemc-sandbox-storage.s3.ap-south-1.amazonaws.com",
+									"cors_rule": [],
+									"force_destroy": false,
+									"grant": [
+										{
+											"id": "babf0efecbb48e2d3fca1499e949cd87a81123a5a439403316e58d3312a94bc0",
+											"permissions": ["FULL_CONTROL"],
+											"type": "CanonicalUser",
+											"uri": ""
+										}
+									],
+									"hosted_zone_id": "Z11RGJOFQNVJUP",
+									"id": "woofle-pemc-sandbox-storage",
+									"lifecycle_rule": [],
+									"logging": [],
+									"object_lock_configuration": [],
+									"object_lock_enabled": false,
+									"policy": "",
+									"region": "ap-south-1",
+									"replication_configuration": [],
+									"request_payer": "BucketOwner",
+									"server_side_encryption_configuration": [
+										{
+											"rule": [
+												{
+													"apply_server_side_encryption_by_default": [
+														{
+															"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+															"sse_algorithm": "aws:kms"
+														}
+													],
+													"bucket_key_enabled": true
+												}
+											]
+										}
+									],
+									"tags": {},
+									"tags_all": {
+										"pemc:cost-center": "sre",
+										"pemc:environment": "sandbox",
+										"pemc:managed-by": "terraform",
+										"pemc:owner": "woofle"
+									},
+									"timeouts": null,
+									"versioning": [
+										{
+											"enabled": true,
+											"mfa_delete": false
+										}
+									],
+									"website": [],
+									"website_domain": null,
+									"website_endpoint": null
+								},
+								"sensitive_values": {
+									"cors_rule": [],
+									"grant": [
+										{
+											"permissions": [false]
+										}
+									],
+									"lifecycle_rule": [],
+									"logging": [],
+									"object_lock_configuration": [],
+									"replication_configuration": [],
+									"server_side_encryption_configuration": [
+										{
+											"rule": [
+												{
+													"apply_server_side_encryption_by_default": [
+														{}
+													]
+												}
+											]
+										}
+									],
+									"tags": {},
+									"tags_all": {},
+									"versioning": [{}],
+									"website": []
+								},
+								"identity_schema_version": 0,
+								"identity": {
+									"account_id": "782747473473",
+									"bucket": "woofle-pemc-sandbox-storage",
+									"region": "ap-south-1"
+								}
+							},
+							{
+								"address": "module.storage.aws_s3_bucket_public_access_block.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket_public_access_block",
+								"name": "this",
+								"provider_name": "registry.terraform.io/hashicorp/aws",
+								"schema_version": 0,
+								"values": {
+									"block_public_acls": true,
+									"block_public_policy": true,
+									"bucket": "woofle-pemc-sandbox-storage",
+									"id": "woofle-pemc-sandbox-storage",
+									"ignore_public_acls": true,
+									"region": "ap-south-1",
+									"restrict_public_buckets": true,
+									"skip_destroy": null
+								},
+								"sensitive_values": {},
+								"depends_on": [
+									"module.storage.aws_s3_bucket.this"
+								],
+								"identity_schema_version": 0,
+								"identity": {
+									"account_id": "782747473473",
+									"bucket": "woofle-pemc-sandbox-storage",
+									"region": "ap-south-1"
+								}
+							},
+							{
+								"address": "module.storage.aws_s3_bucket_server_side_encryption_configuration.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket_server_side_encryption_configuration",
+								"name": "this",
+								"provider_name": "registry.terraform.io/hashicorp/aws",
+								"schema_version": 0,
+								"values": {
+									"bucket": "woofle-pemc-sandbox-storage",
+									"expected_bucket_owner": "",
+									"id": "woofle-pemc-sandbox-storage",
+									"region": "ap-south-1",
+									"rule": [
+										{
+											"apply_server_side_encryption_by_default": [
+												{
+													"kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+													"sse_algorithm": "aws:kms"
+												}
+											],
+											"blocked_encryption_types": [
+												"SSE-C"
+											],
+											"bucket_key_enabled": true
+										}
+									]
+								},
+								"sensitive_values": {
+									"rule": [
+										{
+											"apply_server_side_encryption_by_default": [
+												{}
+											],
+											"blocked_encryption_types": [false]
+										}
+									]
+								},
+								"depends_on": [
+									"data.aws_kms_alias.storage",
+									"module.storage.aws_s3_bucket.this"
+								],
+								"identity_schema_version": 1,
+								"identity": {
+									"account_id": "782747473473",
+									"bucket": "woofle-pemc-sandbox-storage",
+									"region": "ap-south-1"
+								}
+							},
+							{
+								"address": "module.storage.aws_s3_bucket_versioning.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket_versioning",
+								"name": "this",
+								"provider_name": "registry.terraform.io/hashicorp/aws",
+								"schema_version": 0,
+								"values": {
+									"bucket": "woofle-pemc-sandbox-storage",
+									"expected_bucket_owner": "",
+									"id": "woofle-pemc-sandbox-storage",
+									"mfa": null,
+									"region": "ap-south-1",
+									"versioning_configuration": [
+										{
+											"mfa_delete": "Disabled",
+											"status": "Enabled"
+										}
+									]
+								},
+								"sensitive_values": {
+									"versioning_configuration": [{}]
+								},
+								"depends_on": [
+									"module.storage.aws_s3_bucket.this"
+								],
+								"identity_schema_version": 1,
+								"identity": {
+									"account_id": "782747473473",
+									"bucket": "woofle-pemc-sandbox-storage",
+									"region": "ap-south-1"
+								}
+							}
+						],
+						"address": "module.storage"
+					}
+				]
+			}
+		}
+	},
+	"configuration": {
+		"provider_config": {
+			"aws": {
+				"name": "aws",
+				"full_name": "registry.terraform.io/hashicorp/aws",
+				"version_constraint": "~> 6.64",
+				"expressions": {
+					"default_tags": [
+						{
+							"tags": {
+								"constant_value": {
+									"pemc:cost-center": "sre",
+									"pemc:environment": "sandbox",
+									"pemc:managed-by": "terraform",
+									"pemc:owner": "woofle"
+								}
+							}
+						}
+					],
+					"region": {
+						"constant_value": "ap-south-1"
+					}
+				}
+			}
+		},
+		"root_module": {
+			"outputs": {
+				"bucket_arn": {
+					"expression": {
+						"references": [
+							"module.storage.bucket_arn",
+							"module.storage"
+						]
+					}
+				},
+				"bucket_id": {
+					"expression": {
+						"references": [
+							"module.storage.bucket_id",
+							"module.storage"
+						]
+					}
+				}
+			},
+			"resources": [
+				{
+					"address": "data.aws_kms_alias.storage",
+					"mode": "data",
+					"type": "aws_kms_alias",
+					"name": "storage",
+					"provider_config_key": "aws",
+					"expressions": {
+						"name": {
+							"references": ["var.kms_key_alias"]
+						}
+					},
+					"schema_version": 0
+				}
+			],
+			"module_calls": {
+				"storage": {
+					"source": "../../../../modules/aws/s3-bucket",
+					"expressions": {
+						"bucket_name": {
+							"references": ["var.bucket_name"]
+						},
+						"kms_key_arn": {
+							"references": [
+								"data.aws_kms_alias.storage.target_key_arn",
+								"data.aws_kms_alias.storage"
+							]
+						},
+						"versioning_enabled": {
+							"references": ["var.versioning_enabled"]
+						}
+					},
+					"module": {
+						"outputs": {
+							"bucket_arn": {
+								"expression": {
+									"references": [
+										"aws_s3_bucket.this.arn",
+										"aws_s3_bucket.this"
+									]
+								}
+							},
+							"bucket_id": {
+								"expression": {
+									"references": [
+										"aws_s3_bucket.this.id",
+										"aws_s3_bucket.this"
+									]
+								}
+							}
+						},
+						"resources": [
+							{
+								"address": "aws_s3_bucket.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket",
+								"name": "this",
+								"provider_config_key": "aws",
+								"expressions": {
+									"bucket": {
+										"references": ["var.bucket_name"]
+									}
+								},
+								"schema_version": 0
+							},
+							{
+								"address": "aws_s3_bucket_public_access_block.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket_public_access_block",
+								"name": "this",
+								"provider_config_key": "aws",
+								"expressions": {
+									"block_public_acls": {
+										"constant_value": true
+									},
+									"block_public_policy": {
+										"constant_value": true
+									},
+									"bucket": {
+										"references": [
+											"aws_s3_bucket.this.id",
+											"aws_s3_bucket.this"
+										]
+									},
+									"ignore_public_acls": {
+										"constant_value": true
+									},
+									"restrict_public_buckets": {
+										"constant_value": true
+									}
+								},
+								"schema_version": 0
+							},
+							{
+								"address": "aws_s3_bucket_server_side_encryption_configuration.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket_server_side_encryption_configuration",
+								"name": "this",
+								"provider_config_key": "aws",
+								"expressions": {
+									"bucket": {
+										"references": [
+											"aws_s3_bucket.this.id",
+											"aws_s3_bucket.this"
+										]
+									},
+									"rule": [
+										{
+											"apply_server_side_encryption_by_default": [
+												{
+													"kms_master_key_id": {
+														"references": [
+															"var.kms_key_arn"
+														]
+													},
+													"sse_algorithm": {
+														"constant_value": "aws:kms"
+													}
+												}
+											],
+											"bucket_key_enabled": {
+												"constant_value": true
+											}
+										}
+									]
+								},
+								"schema_version": 0
+							},
+							{
+								"address": "aws_s3_bucket_versioning.this",
+								"mode": "managed",
+								"type": "aws_s3_bucket_versioning",
+								"name": "this",
+								"provider_config_key": "aws",
+								"expressions": {
+									"bucket": {
+										"references": [
+											"aws_s3_bucket.this.id",
+											"aws_s3_bucket.this"
+										]
+									},
+									"versioning_configuration": [
+										{
+											"status": {
+												"references": [
+													"var.versioning_enabled"
+												]
+											}
+										}
+									]
+								},
+								"schema_version": 0
+							}
+						],
+						"variables": {
+							"bucket_name": {
+								"description": "name of the s3 bucket to create"
+							},
+							"kms_key_arn": {
+								"description": "arn of the kms key used to encrypt objects in the bucket"
+							},
+							"versioning_enabled": {
+								"default": true,
+								"description": "whether bucket versioning is enabled"
+							}
+						}
+					}
+				}
+			},
+			"variables": {
+				"bucket_name": {
+					"default": "woofle-pemc-sandbox-storage"
+				},
+				"kms_key_alias": {
+					"default": "alias/woofle-pemc-s3",
+					"description": "alias of the shared sandbox S3 CMK, provisioned in live/sandbox/_bootstrap"
+				},
+				"versioning_enabled": {
+					"default": true
+				}
+			}
+		}
+	},
+	"relevant_attributes": [
+		{
+			"resource": "module.storage.aws_s3_bucket.this",
+			"attribute": ["arn"]
+		},
+		{
+			"resource": "module.storage.aws_s3_bucket.this",
+			"attribute": ["id"]
+		}
+	],
+	"timestamp": "2026-10-11T12:43:11Z",
+	"applyable": false,
+	"complete": true,
+	"errored": false
+}
