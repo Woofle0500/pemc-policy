@@ -44,8 +44,8 @@ Current version: `schema_version` 1.
 | `labels` | AWS `tags_all` or GCP `effective_labels` | Both include provider-level defaults, so `default_tags` count. |
 | `labels_state` | `known`, `unknown` or `unsupported` | Many resource types can't be tagged at all. |
 | `config` | Known attribute values after the change | For a `delete`, it holds the values being removed. |
-| `unknown` | Which attributes are known only after apply | Copied from the plan. See below. |
-| `sensitive` | Which attributes Terraform marks sensitive | Their values are removed from `config`. |
+| `unknown` | Which attributes are known only after apply | Copied from the plan, except label attributes. See below. |
+| `sensitive` | Which attributes Terraform marks sensitive | Their values are removed from `config`. Label attributes are left out, see `labels`. |
 | `related` | Other resources that configure this one, grouped by type | e.g. A bucket's versioning, encryption and public-access block are separate resources. |
 
 ## Known, unknown and omitted
@@ -59,6 +59,26 @@ An attribute can be in one of three states, and policies must tell them apart:
 | Omitted | no | no | Never set and not computed |
 
 A missing key in `config` is not the same as `false`. Check `unknown` before concluding an attribute is absent.
+
+## Shape of `unknown` and `sensitive`
+
+`unknown` and `sensitive` follow the shape of `config`, with `true` at the leaves that are unknown or sensitive. Lists keep their positions, so `unknown.rule[0].blocked_encryption_types: true` points at the same item as `config.rule[0]`. `false`, `{}`, `[]` or a missing key all mean nothing at that spot is unknown or sensitive. An attribute that is unknown has no value in `config`, so it appears in `unknown` only.
+
+A sensitive item inside a list is replaced by `null` in `config`, so positions stay aligned.
+
+## Related resources
+
+Some resources are configured by separate resources. E.g. an S3 bucket's versioning, encryption, public-access block, policy and lifecycle configuration are each their own resource. The normaliser links each one to its bucket under the bucket's `related`, grouped by type.
+
+S3 rules must read `related`. They must never read the bucket's own `versioning` or `server_side_encryption_configuration` attributes: the provider deprecates them. They are unknown in a plan for a new bucket and only mirror the separate resources for an existing one.
+
+A bucket with nothing in `related` for a type has no such resource, so the rule denies it. A child that is being deleted or forgotten is not attached, because it won't exist after the apply. Children also stay in the top-level `resources` list.
+
+## Known limits
+
+- A bucket created with `count` or `for_each` (addresses like `aws_s3_bucket.this["logs"]`) is not linked to its children.
+- A child the normaliser can't link stays unattached. Its bucket then has nothing in `related`, and the S3 rules deny it. Unresolved cases are blocked, never passed.
+- Only the child types listed in `normalizer/README.md` are linked.
 
 ## Required fields and allowed values
 

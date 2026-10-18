@@ -1,0 +1,285 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "stack": "live/sandbox/ap-south-1/storage",
+    "terraform_version": "1.15.9"
+  },
+  "resources": [
+    {
+      "address": "module.storage.aws_s3_bucket.this",
+      "type": "aws_s3_bucket",
+      "provider": "aws",
+      "action": "no-op",
+      "labels": {
+        "pemc:cost-center": "sre",
+        "pemc:environment": "sandbox",
+        "pemc:managed-by": "terraform",
+        "pemc:owner": "woofle"
+      },
+      "labels_state": "known",
+      "config": {
+        "acceleration_status": "",
+        "acl": null,
+        "arn": "arn:aws:s3:::woofle-pemc-sandbox-storage",
+        "bucket": "woofle-pemc-sandbox-storage",
+        "bucket_domain_name": "woofle-pemc-sandbox-storage.s3.amazonaws.com",
+        "bucket_namespace": "global",
+        "bucket_prefix": "",
+        "bucket_region": "ap-south-1",
+        "bucket_regional_domain_name": "woofle-pemc-sandbox-storage.s3.ap-south-1.amazonaws.com",
+        "cors_rule": [],
+        "force_destroy": false,
+        "grant": [
+          {
+            "id": "babf0efecbb48e2d3fca1499e949cd87a81123a5a439403316e58d3312a94bc0",
+            "permissions": [
+              "FULL_CONTROL"
+            ],
+            "type": "CanonicalUser",
+            "uri": ""
+          }
+        ],
+        "hosted_zone_id": "Z11RGJOFQNVJUP",
+        "id": "woofle-pemc-sandbox-storage",
+        "lifecycle_rule": [],
+        "logging": [],
+        "object_lock_configuration": [],
+        "object_lock_enabled": false,
+        "policy": "",
+        "region": "ap-south-1",
+        "replication_configuration": [],
+        "request_payer": "BucketOwner",
+        "server_side_encryption_configuration": [
+          {
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {
+                    "kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+                    "sse_algorithm": "aws:kms"
+                  }
+                ],
+                "bucket_key_enabled": true
+              }
+            ]
+          }
+        ],
+        "timeouts": null,
+        "versioning": [
+          {
+            "enabled": true,
+            "mfa_delete": false
+          }
+        ],
+        "website": [],
+        "website_domain": null,
+        "website_endpoint": null
+      },
+      "unknown": {},
+      "sensitive": {
+        "cors_rule": [],
+        "grant": [
+          {
+            "permissions": [
+              false
+            ]
+          }
+        ],
+        "lifecycle_rule": [],
+        "logging": [],
+        "object_lock_configuration": [],
+        "replication_configuration": [],
+        "server_side_encryption_configuration": [
+          {
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {}
+                ]
+              }
+            ]
+          }
+        ],
+        "versioning": [
+          {}
+        ],
+        "website": []
+      },
+      "related": {
+        "aws_s3_bucket_public_access_block": [
+          {
+            "address": "module.storage.aws_s3_bucket_public_access_block.this",
+            "action": "no-op",
+            "config": {
+              "block_public_acls": true,
+              "block_public_policy": true,
+              "bucket": "woofle-pemc-sandbox-storage",
+              "id": "woofle-pemc-sandbox-storage",
+              "ignore_public_acls": true,
+              "region": "ap-south-1",
+              "restrict_public_buckets": true,
+              "skip_destroy": null
+            },
+            "unknown": {},
+            "sensitive": {}
+          }
+        ],
+        "aws_s3_bucket_server_side_encryption_configuration": [
+          {
+            "address": "module.storage.aws_s3_bucket_server_side_encryption_configuration.this",
+            "action": "no-op",
+            "config": {
+              "bucket": "woofle-pemc-sandbox-storage",
+              "expected_bucket_owner": "",
+              "id": "woofle-pemc-sandbox-storage",
+              "region": "ap-south-1",
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+                      "sse_algorithm": "aws:kms"
+                    }
+                  ],
+                  "blocked_encryption_types": [
+                    "SSE-C"
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            },
+            "unknown": {},
+            "sensitive": {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ],
+                  "blocked_encryption_types": [
+                    false
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "aws_s3_bucket_versioning": [
+          {
+            "address": "module.storage.aws_s3_bucket_versioning.this",
+            "action": "no-op",
+            "config": {
+              "bucket": "woofle-pemc-sandbox-storage",
+              "expected_bucket_owner": "",
+              "id": "woofle-pemc-sandbox-storage",
+              "mfa": null,
+              "region": "ap-south-1",
+              "versioning_configuration": [
+                {
+                  "mfa_delete": "Disabled",
+                  "status": "Enabled"
+                }
+              ]
+            },
+            "unknown": {},
+            "sensitive": {
+              "versioning_configuration": [
+                {}
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "address": "module.storage.aws_s3_bucket_public_access_block.this",
+      "type": "aws_s3_bucket_public_access_block",
+      "provider": "aws",
+      "action": "no-op",
+      "labels": {},
+      "labels_state": "unsupported",
+      "config": {
+        "block_public_acls": true,
+        "block_public_policy": true,
+        "bucket": "woofle-pemc-sandbox-storage",
+        "id": "woofle-pemc-sandbox-storage",
+        "ignore_public_acls": true,
+        "region": "ap-south-1",
+        "restrict_public_buckets": true,
+        "skip_destroy": null
+      },
+      "unknown": {},
+      "sensitive": {},
+      "related": {}
+    },
+    {
+      "address": "module.storage.aws_s3_bucket_server_side_encryption_configuration.this",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "provider": "aws",
+      "action": "no-op",
+      "labels": {},
+      "labels_state": "unsupported",
+      "config": {
+        "bucket": "woofle-pemc-sandbox-storage",
+        "expected_bucket_owner": "",
+        "id": "woofle-pemc-sandbox-storage",
+        "region": "ap-south-1",
+        "rule": [
+          {
+            "apply_server_side_encryption_by_default": [
+              {
+                "kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+                "sse_algorithm": "aws:kms"
+              }
+            ],
+            "blocked_encryption_types": [
+              "SSE-C"
+            ],
+            "bucket_key_enabled": true
+          }
+        ]
+      },
+      "unknown": {},
+      "sensitive": {
+        "rule": [
+          {
+            "apply_server_side_encryption_by_default": [
+              {}
+            ],
+            "blocked_encryption_types": [
+              false
+            ]
+          }
+        ]
+      },
+      "related": {}
+    },
+    {
+      "address": "module.storage.aws_s3_bucket_versioning.this",
+      "type": "aws_s3_bucket_versioning",
+      "provider": "aws",
+      "action": "no-op",
+      "labels": {},
+      "labels_state": "unsupported",
+      "config": {
+        "bucket": "woofle-pemc-sandbox-storage",
+        "expected_bucket_owner": "",
+        "id": "woofle-pemc-sandbox-storage",
+        "mfa": null,
+        "region": "ap-south-1",
+        "versioning_configuration": [
+          {
+            "mfa_delete": "Disabled",
+            "status": "Enabled"
+          }
+        ]
+      },
+      "unknown": {},
+      "sensitive": {
+        "versioning_configuration": [
+          {}
+        ]
+      },
+      "related": {}
+    }
+  ]
+}
