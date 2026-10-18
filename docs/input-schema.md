@@ -44,8 +44,8 @@ Current version: `schema_version` 1.
 | `labels` | AWS `tags_all` or GCP `effective_labels` | Both include provider-level defaults, so `default_tags` count. |
 | `labels_state` | `known`, `unknown` or `unsupported` | Many resource types can't be tagged at all. |
 | `config` | Known attribute values after the change | For a `delete`, it holds the values being removed. |
-| `unknown` | Which attributes are known only after apply | Copied from the plan. See below. |
-| `sensitive` | Which attributes Terraform marks sensitive | Their values are removed from `config`. |
+| `unknown` | Which attributes are known only after apply | Copied from the plan, except label attributes. See below. |
+| `sensitive` | Which attributes Terraform marks sensitive | Their values are removed from `config`. Label attributes are left out, see `labels`. |
 | `related` | Other resources that configure this one, grouped by type | e.g. A bucket's versioning, encryption and public-access block are separate resources. |
 
 ## Known, unknown and omitted
