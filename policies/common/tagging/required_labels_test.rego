@@ -172,3 +172,34 @@ test_google_with_colon_prefix_denied if {
 	mentions(fs, "pemc-environment")
 	mentions(fs, "pemc-cost-center")
 }
+
+# providers
+
+test_google_beta_dash_prefix_passes if {
+	r := resource("google-beta", "create", "known", gcp_labels)
+	count(findings(r)) == 0
+}
+
+test_google_beta_with_colon_prefix_denied if {
+	r := resource("google-beta", "create", "known", aws_labels)
+	fs := findings(r)
+	count(fs) == 3
+	mentions(fs, "pemc-owner")
+}
+
+test_unknown_provider_with_known_labels_denied if {
+	r := resource("azurerm", "create", "known", aws_labels)
+	fs := findings(r)
+	count(fs) == 1
+	mentions(fs, "no label convention defined for provider azurerm")
+}
+
+test_unknown_provider_with_unsupported_labels_passes if {
+	r := resource("azurerm", "create", "unsupported", {})
+	count(findings(r)) == 0
+}
+
+test_unknown_provider_delete_passes if {
+	r := resource("azurerm", "delete", "known", aws_labels)
+	count(findings(r)) == 0
+}
