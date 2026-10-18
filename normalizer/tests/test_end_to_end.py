@@ -2,6 +2,7 @@ import copy
 import json
 import shutil
 import subprocess
+import os
 
 import pytest
 
@@ -12,8 +13,10 @@ POLICIES_DIR = NORMALIZER_DIR.parent / "policies"
 STACK = "live/sandbox/ap-south-1/storage"
 BUCKET = "module.storage.aws_s3_bucket.this"
 
-pytestmark = pytest.mark.skipif(shutil.which("opa") is None, reason="opa is not installed")
-
+pytestmark = pytest.mark.skipif(
+    shutil.which("opa") is None and "CI" not in os.environ,
+    reason="opa is not installed",
+)
 
 def collect_deny(node, findings=None):
     """Collect every finding under any key named deny, so no policy list is needed."""

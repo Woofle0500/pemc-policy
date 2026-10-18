@@ -56,6 +56,12 @@ An unresolved child stays unattached and its parent's rules deny it. See "Known 
 ## Known limits
 
 - A parent with its own `count` or `for_each` (plan addresses like `aws_s3_bucket.this["logs"]`) is referenced in `configuration` as plain `aws_s3_bucket.this`, which matches no address in the plan. Its children stay unattached and its rules deny it. A child with `count` or `for_each` is fine as long as its parent has neither.
+- A child that points at its bucket through anything other than `aws_s3_bucket.<name>` is never linked. I.e. the reference names a module output or a variable instead, and the normaliser only follows references to the bucket resource itself. For example:
+  - a versioning resource in the root module using `module.storage.bucket_id`
+  - a child that takes the bucket name from a variable
+  - a bucket that lives in a different stack
+
+  The bucket ends up with nothing in `related`, so the S3 rules deny a bucket that may be configured correctly. It fails safe.
 - Modules called with `count` or `for_each` are fine: the module prefix comes from the child's own `module_address`, such as `module.storage["logs"]`.
 - Only the child types in `CHILDREN` are linked to a parent.
 - `unknown` and `sensitive` are copied from the plan except for the label attributes. Those are removed from `config`, `unknown` and `sensitive` and kept only in `labels`.

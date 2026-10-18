@@ -77,6 +77,7 @@ A bucket with nothing in `related` for a type has no such resource, so the rule 
 ## Known limits
 
 - A bucket created with `count` or `for_each` (addresses like `aws_s3_bucket.this["logs"]`) is not linked to its children.
+- A child that points at its bucket through a module output (`module.storage.bucket_id`), a variable, or a bucket in a different stack is not linked, because it doesn't refer to `aws_s3_bucket.<name>`. The bucket then has nothing in `related`, and the S3 rules deny it even if it is configured correctly.
 - A child the normaliser can't link stays unattached. Its bucket then has nothing in `related`, and the S3 rules deny it. Unresolved cases are blocked, never passed.
 - Only the child types listed in `normalizer/README.md` are linked.
 
