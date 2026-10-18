@@ -7,11 +7,7 @@ Writes the normalised document (docs/input-schema.md) to stdout. On any failure,
 
 Principle: anything the normaliser can't resolve is left in the state that makes policies deny, never in a state that makes them pass.
 
-Known limits:
-- A parent with its own count/for_each (plan addresses like aws_s3_bucket.this["logs"]) is referenced from the configuration as plain "aws_s3_bucket.this", which matches no address in the plan. The child stays unattached and the bucket's rules deny. A child with count/for_each is fine as long as its parent has neither.
-- Modules called with count/for_each are fine: the module prefix comes from the child's own module_address, e.g. module.storage["logs"].
-- Only the child types in CHILDREN are linked to a parent.
-- unknown and sensitive are copied from the plan except for the label attributes, which are removed from config, unknown and sensitive alike, kept only in labels.
+Known limits are listed in README.md.
 """
 
 import argparse
