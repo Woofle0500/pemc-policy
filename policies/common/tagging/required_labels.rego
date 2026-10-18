@@ -25,7 +25,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": r.address,
-		"message": "labels are unknown until apply and cannot be verified",
+		"msg": "labels are unknown until apply and cannot be verified",
 	}
 }
 
@@ -40,7 +40,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": r.address,
-		"message": sprintf("required label %q is missing or has an unknown value", [key]),
+		"msg": sprintf("required label %q is missing or has an unknown value", [key]),
 	}
 }
 
@@ -56,7 +56,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": r.address,
-		"message": sprintf("label %q has a value that is not allowed, expected one of %v", [key, sort(allowed_environments)]),
+		"msg": sprintf("label %q has a value that is not allowed, expected one of %v", [key, sort(allowed_environments)]),
 	}
 }
 
@@ -68,7 +68,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": r.address,
-		"message": sprintf("no label convention defined for provider %s", [r.provider]),
+		"msg": sprintf("no label convention defined for provider %s", [r.provider]),
 	}
 }
 

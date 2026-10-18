@@ -66,4 +66,4 @@ def test_missing_required_label_is_reported(tmp_path):
 
     assert [(f["policy_id"], f["address"]) for f in findings] == [
         ("common.tagging.required_labels", BUCKET)]
-    assert "pemc:owner" in findings[0]["message"]
+    assert "pemc:owner" in findings[0]["msg"]
