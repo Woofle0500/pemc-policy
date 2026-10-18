@@ -1,0 +1,260 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "stack": "live/sandbox/ap-south-1/storage",
+    "terraform_version": "1.15.9"
+  },
+  "resources": [
+    {
+      "address": "module.storage.aws_s3_bucket.this",
+      "type": "aws_s3_bucket",
+      "provider": "aws",
+      "action": "create",
+      "labels": {
+        "pemc:cost-center": "sre",
+        "pemc:environment": "sandbox",
+        "pemc:managed-by": "terraform",
+        "pemc:owner": "woofle"
+      },
+      "labels_state": "known",
+      "config": {
+        "bucket": "woofle-pemc-sandbox-storage",
+        "force_destroy": false,
+        "region": "ap-south-1",
+        "timeouts": null
+      },
+      "unknown": {
+        "acceleration_status": true,
+        "acl": true,
+        "arn": true,
+        "bucket_domain_name": true,
+        "bucket_namespace": true,
+        "bucket_prefix": true,
+        "bucket_region": true,
+        "bucket_regional_domain_name": true,
+        "cors_rule": true,
+        "grant": true,
+        "hosted_zone_id": true,
+        "id": true,
+        "lifecycle_rule": true,
+        "logging": true,
+        "object_lock_configuration": true,
+        "object_lock_enabled": true,
+        "policy": true,
+        "replication_configuration": true,
+        "request_payer": true,
+        "server_side_encryption_configuration": true,
+        "versioning": true,
+        "website": true,
+        "website_domain": true,
+        "website_endpoint": true
+      },
+      "sensitive": {
+        "cors_rule": [],
+        "grant": [],
+        "lifecycle_rule": [],
+        "logging": [],
+        "object_lock_configuration": [],
+        "replication_configuration": [],
+        "server_side_encryption_configuration": [],
+        "versioning": [],
+        "website": []
+      },
+      "related": {
+        "aws_s3_bucket_public_access_block": [
+          {
+            "address": "module.storage.aws_s3_bucket_public_access_block.this",
+            "action": "create",
+            "config": {
+              "block_public_acls": true,
+              "block_public_policy": true,
+              "ignore_public_acls": true,
+              "region": "ap-south-1",
+              "restrict_public_buckets": true,
+              "skip_destroy": null
+            },
+            "unknown": {
+              "bucket": true,
+              "id": true
+            },
+            "sensitive": {}
+          }
+        ],
+        "aws_s3_bucket_server_side_encryption_configuration": [
+          {
+            "address": "module.storage.aws_s3_bucket_server_side_encryption_configuration.this",
+            "action": "create",
+            "config": {
+              "expected_bucket_owner": null,
+              "region": "ap-south-1",
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {
+                      "kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+                      "sse_algorithm": "aws:kms"
+                    }
+                  ],
+                  "bucket_key_enabled": true
+                }
+              ]
+            },
+            "unknown": {
+              "bucket": true,
+              "id": true,
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ],
+                  "blocked_encryption_types": true
+                }
+              ]
+            },
+            "sensitive": {
+              "rule": [
+                {
+                  "apply_server_side_encryption_by_default": [
+                    {}
+                  ],
+                  "blocked_encryption_types": []
+                }
+              ]
+            }
+          }
+        ],
+        "aws_s3_bucket_versioning": [
+          {
+            "address": "module.storage.aws_s3_bucket_versioning.this",
+            "action": "create",
+            "config": {
+              "expected_bucket_owner": null,
+              "mfa": null,
+              "region": "ap-south-1",
+              "versioning_configuration": [
+                {
+                  "status": "Enabled"
+                }
+              ]
+            },
+            "unknown": {
+              "bucket": true,
+              "id": true,
+              "versioning_configuration": [
+                {
+                  "mfa_delete": true
+                }
+              ]
+            },
+            "sensitive": {
+              "versioning_configuration": [
+                {}
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "address": "module.storage.aws_s3_bucket_public_access_block.this",
+      "type": "aws_s3_bucket_public_access_block",
+      "provider": "aws",
+      "action": "create",
+      "labels": {},
+      "labels_state": "unsupported",
+      "config": {
+        "block_public_acls": true,
+        "block_public_policy": true,
+        "ignore_public_acls": true,
+        "region": "ap-south-1",
+        "restrict_public_buckets": true,
+        "skip_destroy": null
+      },
+      "unknown": {
+        "bucket": true,
+        "id": true
+      },
+      "sensitive": {},
+      "related": {}
+    },
+    {
+      "address": "module.storage.aws_s3_bucket_server_side_encryption_configuration.this",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "provider": "aws",
+      "action": "create",
+      "labels": {},
+      "labels_state": "unsupported",
+      "config": {
+        "expected_bucket_owner": null,
+        "region": "ap-south-1",
+        "rule": [
+          {
+            "apply_server_side_encryption_by_default": [
+              {
+                "kms_master_key_id": "arn:aws:kms:ap-south-1:782747473473:key/937678ff-6117-4676-a176-3771f559c730",
+                "sse_algorithm": "aws:kms"
+              }
+            ],
+            "bucket_key_enabled": true
+          }
+        ]
+      },
+      "unknown": {
+        "bucket": true,
+        "id": true,
+        "rule": [
+          {
+            "apply_server_side_encryption_by_default": [
+              {}
+            ],
+            "blocked_encryption_types": true
+          }
+        ]
+      },
+      "sensitive": {
+        "rule": [
+          {
+            "apply_server_side_encryption_by_default": [
+              {}
+            ],
+            "blocked_encryption_types": []
+          }
+        ]
+      },
+      "related": {}
+    },
+    {
+      "address": "module.storage.aws_s3_bucket_versioning.this",
+      "type": "aws_s3_bucket_versioning",
+      "provider": "aws",
+      "action": "create",
+      "labels": {},
+      "labels_state": "unsupported",
+      "config": {
+        "expected_bucket_owner": null,
+        "mfa": null,
+        "region": "ap-south-1",
+        "versioning_configuration": [
+          {
+            "status": "Enabled"
+          }
+        ]
+      },
+      "unknown": {
+        "bucket": true,
+        "id": true,
+        "versioning_configuration": [
+          {
+            "mfa_delete": true
+          }
+        ]
+      },
+      "sensitive": {
+        "versioning_configuration": [
+          {}
+        ]
+      },
+      "related": {}
+    }
+  ]
+}
