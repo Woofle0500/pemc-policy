@@ -14,7 +14,7 @@ plan(action, config, unknown) := {"resources": [{
 finding := {
 	"policy_id": "aws.ebs.encryption_required",
 	"address": "aws_ebs_volume.data",
-	"message": "EBS volume must set encrypted = true explicitly",
+	"msg": "EBS volume must set encrypted = true explicitly",
 }
 
 test_encrypted_true_passes if {

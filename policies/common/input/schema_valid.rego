@@ -20,7 +20,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": "<input>",
-		"message": sprintf(
+		"msg": sprintf(
 			"unsupported schema_version %v, expected %d",
 			[object.get(input, ["meta", "schema_version"], null), supported_schema_version],
 		),
@@ -38,7 +38,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": address_of(r, i),
-		"message": sprintf("missing required fields: %s", [concat(", ", sort(missing))]),
+		"msg": sprintf("missing required fields: %s", [concat(", ", sort(missing))]),
 	}
 }
 
@@ -50,7 +50,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": address_of(r, i),
-		"message": sprintf("invalid action %v, expected one of %v", [r.action, sort(allowed_actions)]),
+		"msg": sprintf("invalid action %v, expected one of %v", [r.action, sort(allowed_actions)]),
 	}
 }
 
@@ -62,7 +62,7 @@ deny contains finding if {
 	finding := {
 		"policy_id": policy_id,
 		"address": address_of(r, i),
-		"message": sprintf("invalid labels_state %v, expected one of %v", [r.labels_state, sort(allowed_labels_states)]),
+		"msg": sprintf("invalid labels_state %v, expected one of %v", [r.labels_state, sort(allowed_labels_states)]),
 	}
 }
 

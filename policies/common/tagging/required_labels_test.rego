@@ -31,7 +31,7 @@ findings(r) := fs if {
 
 mentions(fs, text) if {
 	some f in fs
-	contains(f.message, text)
+	contains(f.msg, text)
 }
 
 # labels_state

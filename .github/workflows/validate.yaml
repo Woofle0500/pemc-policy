@@ -22,7 +22,7 @@ jobs:
       - name: Set up OPA
         uses: open-policy-agent/setup-opa@b2b258e089860efaadaaf71bf6e3aecb4a3eeff1 # v2.4.0
         with:
-          version: 1.19.1
+          version: 1.21.1
 
       - name: Format
         run: opa fmt --fail -l .
@@ -74,10 +74,18 @@ jobs:
         with:
           python-version-file: .tool-versions
 
-      - name: Set up OPA
-        uses: open-policy-agent/setup-opa@b2b258e089860efaadaaf71bf6e3aecb4a3eeff1 # v2.4.0
-        with:
-          version: 1.19.1
+      # Conftest 0.71.1 bundles OPA 1.21.1, the version the validate job uses.
+      - name: Install conftest
+        env:
+          CONFTEST_VERSION: 0.71.1
+          CONFTEST_SHA256: c3f6b2a753bd56e377a1e51a95ae3e057f926f2e9139f7d5b5dfbbaf810f7985
+        run: |
+          curl -sSfL -o "$RUNNER_TEMP/conftest.tar.gz" \
+            "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz"
+          echo "${CONFTEST_SHA256}  $RUNNER_TEMP/conftest.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/conftest.tar.gz" -C "$RUNNER_TEMP" conftest
+          sudo install "$RUNNER_TEMP/conftest" /usr/local/bin/conftest
+          conftest --version
 
       - name: Install requirements
         run: pip install -r requirements-python.txt

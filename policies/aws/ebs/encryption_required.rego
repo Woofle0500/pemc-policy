@@ -12,6 +12,6 @@ deny contains finding if {
 	finding := {
 		"policy_id": "aws.ebs.encryption_required",
 		"address": r.address,
-		"message": "EBS volume must set encrypted = true explicitly",
+		"msg": "EBS volume must set encrypted = true explicitly",
 	}
 }
