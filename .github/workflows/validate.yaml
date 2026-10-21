@@ -88,7 +88,7 @@ jobs:
           conftest --version
 
       - name: Install requirements
-        run: pip install -r requirements-python.txt
+        run: pip install -r requirements-dev.txt
 
       - name: Test
         run: pytest normalizer/ -v

@@ -36,7 +36,7 @@ Usage mistakes exit 1 as well, not argparse's default 2.
 python normalizer/evaluate.py input.json --policies policies/ --findings findings.json --markdown findings.md
 ```
 
-`input.json` is the output of `normalize.py`. `evaluate.py` runs the policies with conftest, so conftest must be on `PATH`. Python 3.12 and PyYAML (`pip install -r requirements-python.txt`).
+`input.json` is the output of `normalize.py`. `evaluate.py` runs the policies with conftest, so conftest must be on `PATH`. Python 3.12 and PyYAML (`pip install -r requirements.txt`).
 
 | Option | Default |
 |---|---|
@@ -99,7 +99,7 @@ An unresolved child stays unattached and its parent's rules deny it. See "Known 
 ## Tests
 
 ```bash
-pip install -r requirements-python.txt
+pip install -r requirements-dev.txt
 pytest normalizer/
 ```
 
