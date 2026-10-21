@@ -4,13 +4,20 @@ Rego policies that check a normalised Terraform plan. The input format is in [`d
 
 ## Running
 
-```
+```bash
 python normalizer/normalize.py plan.json --stack <stack> > input.json
+python normalizer/evaluate.py input.json --policies policies/ --findings findings.json --markdown findings.md
+```
+
+`evaluate.py`, its exit codes and the `MIN_POLICIES` floor are described in [`normalizer/README.md`](../normalizer/README.md).
+
+To run conftest directly, for debugging:
+
+```bash
 conftest test --policy policies --all-namespaces input.json -o json
 ```
 
-Exit code 0 means no findings, 1 means at least one.
-
+**Always pass `--all-namespaces`.** The policy packages are not named `main`, which is all conftest looks at by default. Without the flag it runs 0 tests and exits 0, so every plan passes.
 
 ## Findings
 

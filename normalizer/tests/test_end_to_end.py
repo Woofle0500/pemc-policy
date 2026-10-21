@@ -1,49 +1,35 @@
 import copy
 import json
-import shutil
-import subprocess
 import os
+import shutil
 
 import pytest
 
 from conftest import FIXTURES_DIR, NORMALIZER_DIR
+from evaluate import main as evaluate_main
 from normalize import normalize
 
 POLICIES_DIR = NORMALIZER_DIR.parent / "policies"
 STACK = "live/sandbox/ap-south-1/storage"
 BUCKET = "module.storage.aws_s3_bucket.this"
 
+# Outside CI a missing conftest skips the tests. In CI it fails them.
 pytestmark = pytest.mark.skipif(
-    shutil.which("opa") is None and "CI" not in os.environ,
-    reason="opa is not installed",
+    shutil.which("conftest") is None and "CI" not in os.environ,
+    reason="conftest is not installed",
 )
-
-def collect_deny(node, findings=None):
-    """Collect every finding under any key named deny, so no policy list is needed."""
-    if findings is None:
-        findings = []
-    if isinstance(node, dict):
-        for key, value in node.items():
-            if key == "deny":
-                findings.extend(value)
-            else:
-                collect_deny(value, findings)
-    elif isinstance(node, list):
-        for item in node:
-            collect_deny(item, findings)
-    return findings
 
 
 def evaluate(plan, tmp_path):
+    """Normalise a plan and run it through every policy, the way the pipeline does."""
     input_path = tmp_path / "input.json"
+    findings_path = tmp_path / "findings.json"
     input_path.write_text(json.dumps(normalize(plan, STACK)))
-    result = subprocess.run(
-        ["opa", "eval", "-d", str(POLICIES_DIR), "--ignore", "*_test.rego",
-         "-i", str(input_path), "--format", "json", "data"],
-        capture_output=True, text=True,
-    )
-    assert result.returncode == 0, result.stderr
-    return collect_deny(json.loads(result.stdout))
+    code = evaluate_main([str(input_path), "--policies", str(POLICIES_DIR),
+                          "--findings", str(findings_path)])
+    findings = json.loads(findings_path.read_text())
+    assert code == (1 if findings else 0)
+    return findings
 
 
 def load_plan(name):
@@ -57,8 +43,7 @@ def test_fixture_has_no_findings(name, tmp_path):
 
 def test_missing_required_label_is_reported(tmp_path):
     plan = load_plan("existing_bucket")
-    bucket = plan["resource_changes"][0]
-    assert bucket["address"] == BUCKET
+    assert plan["resource_changes"][0]["address"] == BUCKET
     plan = copy.deepcopy(plan)
     del plan["resource_changes"][0]["change"]["after"]["tags_all"]["pemc:owner"]
 

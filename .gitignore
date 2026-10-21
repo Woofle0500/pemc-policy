@@ -41,6 +41,7 @@ credentials
 Thumbs.db
 
 ignored
+*.tar.gz*
 
 # Python files
 __pycache__
