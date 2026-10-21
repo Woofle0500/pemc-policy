@@ -80,11 +80,11 @@ jobs:
           CONFTEST_VERSION: 0.71.1
           CONFTEST_SHA256: c3f6b2a753bd56e377a1e51a95ae3e057f926f2e9139f7d5b5dfbbaf810f7985
         run: |
-          curl -sSfL -o conftest.tar.gz \
+          curl -sSfL -o "$RUNNER_TEMP/conftest.tar.gz" \
             "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz"
-          echo "${CONFTEST_SHA256}  conftest.tar.gz" | sha256sum -c -
-          tar -xzf conftest.tar.gz conftest
-          sudo install conftest /usr/local/bin/conftest
+          echo "${CONFTEST_SHA256}  $RUNNER_TEMP/conftest.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/conftest.tar.gz" -C "$RUNNER_TEMP" conftest
+          sudo install "$RUNNER_TEMP/conftest" /usr/local/bin/conftest
           conftest --version
 
       - name: Install requirements
