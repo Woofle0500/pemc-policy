@@ -12,4 +12,4 @@
   address: aws_ebs_volume.scratch
   reason: Throwaway volume for the test
   approved_by: woofle
-  expires: 2026-11-05
+  expires: 2026-10-20
