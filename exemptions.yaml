@@ -12,4 +12,11 @@
   address: aws_ebs_volume.scratch
   reason: Throwaway volume for the test
   approved_by: woofle
-  expires: 2026-10-20
+  expires: 2027-10-20
+
+- policy_id: common.input.schema_valid
+  stack: live/sandbox/ap-south-1/storage
+  address: "<input>"
+  reason: Destined to fail
+  approved_by: woofle
+  expires: 2026-11-20
