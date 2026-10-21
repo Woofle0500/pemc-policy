@@ -1,14 +1,12 @@
 import json
 import os
-import re
 import shutil
 import subprocess
 
 import pytest
 
-import evaluate
-from conftest import FIXTURES_DIR, NORMALIZER_DIR
-from evaluate import EvaluateError, count_ran, flatten, main, render_markdown, run_conftest
+from conftest import FIXTURES_DIR, NORMALIZER_DIR, write_tables
+from evaluate import EvaluateError, flatten, main, ran_packages, render_markdown, run_conftest
 from normalize import normalize
 
 POLICIES_DIR = NORMALIZER_DIR.parent / "policies"
@@ -32,7 +30,7 @@ def result(namespace="p.a", successes=0, failures=()):
 
 # pure functions
 
-def test_count_ran_counts_packages_with_a_pass_or_a_finding():
+def test_ran_packages_has_packages_with_a_pass_or_a_finding():
     results = [
         result("a", successes=2),
         result("b", failures=[finding()]),
@@ -40,7 +38,7 @@ def test_count_ran_counts_packages_with_a_pass_or_a_finding():
         result("d_test"),
         {"namespace": "e"},
     ]
-    assert count_ran(results) == 2
+    assert ran_packages(results) == {"a", "b"}
 
 
 def test_flatten_sorts_by_policy_then_address():
@@ -75,15 +73,16 @@ def test_render_markdown_clean():
 
 
 def test_render_markdown_table():
-    findings = [{"policy_id": "p.a", "address": "aws_x.a", "msg": "bad"}]
+    findings = [{"policy_id": "p.a", "address": "aws_x.a", "msg": "bad", "status": "blocking"}]
     assert render_markdown(findings) == (
+        "## Blocking\n\n"
         "| Policy | Address | Message |\n"
         "|---|---|---|\n"
         "| p.a | `aws_x.a` | bad |\n")
 
 
 def test_render_markdown_escapes_pipes_and_newlines():
-    findings = [{"policy_id": "p", "address": "a", "msg": "one | two\nthree"}]
+    findings = [{"policy_id": "p", "address": "a", "msg": "one | two\nthree", "status": "blocking"}]
     assert "| one \\| two three |" in render_markdown(findings)
 
 
@@ -119,22 +118,9 @@ def test_run_conftest_error_names_first_line_of_stderr(monkeypatch):
 def test_main_without_conftest_exits_2(monkeypatch, tmp_path, capsys):
     monkeypatch.setenv("PATH", "")
     markdown = tmp_path / "findings.md"
-    assert main(["in.json", "--policies", "policies", "--markdown", str(markdown)]) == 2
+    assert main(["in.json", "--policies", "policies", "--markdown", str(markdown), *write_tables(tmp_path)]) == 2
     assert "cannot run conftest" in capsys.readouterr().err
     assert markdown.read_text().startswith("Policy evaluation failed: cannot run conftest")
-
-
-def test_min_policies_matches_the_policies_directory():
-    packages = set()
-    for path in POLICIES_DIR.rglob("*.rego"):
-        if path.name.endswith("_test.rego"):
-            continue
-        text = path.read_text()
-        if re.search(r"^deny\b", text, re.MULTILINE):
-            packages.add(re.search(r"^package\s+(\S+)", text, re.MULTILINE).group(1))
-    assert evaluate.MIN_POLICIES == len(packages), (
-        f"MIN_POLICIES is {evaluate.MIN_POLICIES} but policies/ has {len(packages)} "
-        f"packages with a deny rule: {sorted(packages)}")
 
 
 # with conftest
@@ -148,7 +134,8 @@ def run(tmp_path):
                               else json.dumps(normalize(plan, "s")))
         findings, markdown = tmp_path / "findings.json", tmp_path / "findings.md"
         code = main([str(input_path), "--policies", str(policies),
-                     "--findings", str(findings), "--markdown", str(markdown)])
+                     "--findings", str(findings), "--markdown", str(markdown),
+                     *write_tables(tmp_path)])
         return (code,
                 json.loads(findings.read_text()) if findings.exists() else None,
                 markdown.read_text())
@@ -190,13 +177,13 @@ def test_empty_policies_directory_exits_2(run, tmp_path):
 
 
 @needs_conftest
-def test_policies_without_deny_rules_exit_2_below_the_floor(run, tmp_path):
+def test_policies_without_deny_rules_exit_2_when_the_table_policies_did_not_run(run, tmp_path):
     lib_only = tmp_path / "lib_only"
     lib_only.mkdir()
     shutil.copy(POLICIES_DIR / "lib" / "resources.rego", lib_only)
     code, _, markdown = run(load_plan("existing_bucket"), policies=lib_only)
     assert code == 2
-    assert "only 0 policies evaluated" in markdown
+    assert "in the enforcement table did not run" in markdown
 
 
 @needs_conftest
@@ -215,4 +202,71 @@ def test_broken_input_json_exits_2(run):
 
 @needs_conftest
 def test_missing_input_exits_2(tmp_path):
-    assert main([str(tmp_path / "nope.json"), "--policies", str(POLICIES_DIR)]) == 2
+    assert main([str(tmp_path / "nope.json"), "--policies", str(POLICIES_DIR),
+                 *write_tables(tmp_path)]) == 2
+
+
+# enforcement levels and exemptions, end to end
+
+def missing_owner_plan():
+    plan = load_plan("existing_bucket")
+    del plan["resource_changes"][0]["change"]["after"]["tags_all"]["pemc:owner"]
+    return plan
+
+
+def run_with(tmp_path, plan, tables):
+    input_path = tmp_path / "input.json"
+    input_path.write_text(json.dumps(normalize(plan, "s")))
+    findings, markdown = tmp_path / "findings.json", tmp_path / "findings.md"
+    code = main([str(input_path), "--policies", str(POLICIES_DIR), "--today", "2026-10-21",
+                 "--findings", str(findings), "--markdown", str(markdown), *tables])
+    return code, json.loads(findings.read_text()), markdown.read_text()
+
+
+@needs_conftest
+def test_warn_level_violation_exits_0_and_appears_under_warnings(tmp_path):
+    code, findings, markdown = run_with(tmp_path, missing_owner_plan(), write_tables(tmp_path, "warn"))
+    assert code == 0
+    assert [f["status"] for f in findings] == ["warning"]
+    assert markdown.startswith("## Warnings")
+    assert f"`{BUCKET}`" in markdown
+    assert "## Blocking" not in markdown
+
+
+@needs_conftest
+def test_off_level_violation_is_hidden(tmp_path):
+    code, findings, markdown = run_with(tmp_path, missing_owner_plan(), write_tables(tmp_path, "off"))
+    assert (code, findings, markdown) == (0, [], "No policy findings.\n")
+
+
+@needs_conftest
+def test_exempted_violation_exits_0_and_appears_under_exempted(tmp_path):
+    exemptions = (
+        "- policy_id: common.tagging.required_labels\n"
+        "  stack: s\n"
+        f"  address: {BUCKET}\n"
+        "  reason: Owner label arrives in the next change\n"
+        "  approved_by: woofle\n"
+        "  expires: 2026-11-15\n")
+    code, findings, markdown = run_with(tmp_path, missing_owner_plan(), write_tables(tmp_path, exemptions=exemptions))
+    assert code == 0
+    assert [f["status"] for f in findings] == ["exempted"]
+    assert markdown.startswith("## Exempted")
+    assert "exempted until 2026-11-15: Owner label arrives in the next change" in markdown
+    assert "## Blocking" not in markdown
+
+
+@needs_conftest
+def test_invalid_exemptions_file_exits_2(tmp_path):
+    tables = write_tables(tmp_path, exemptions="- policy_id: common.tagging.required_labels\n")
+    input_path = tmp_path / "input.json"
+    input_path.write_text(json.dumps(normalize(missing_owner_plan(), "s")))
+    assert main([str(input_path), "--policies", str(POLICIES_DIR), *tables]) == 2
+
+
+@needs_conftest
+def test_missing_enforcement_table_exits_2(tmp_path):
+    input_path = tmp_path / "input.json"
+    input_path.write_text(json.dumps(normalize(load_plan("existing_bucket"), "s")))
+    assert main([str(input_path), "--policies", str(POLICIES_DIR), *write_tables(tmp_path),
+                 "--enforcement", str(tmp_path / "nope.yaml")]) == 2
