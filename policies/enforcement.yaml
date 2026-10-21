@@ -4,7 +4,7 @@
 # exemptable: whether exemptions.yaml may waive this policy's findings
 # since: the date the level last changed
 aws.ebs.encryption_required:
-  level: warn
+  level: deny
   exemptable: true
   since: 2026-10-10
 common.tagging.required_labels:
