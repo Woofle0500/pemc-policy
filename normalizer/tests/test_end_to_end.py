@@ -5,7 +5,7 @@ import shutil
 
 import pytest
 
-from conftest import FIXTURES_DIR, NORMALIZER_DIR
+from conftest import FIXTURES_DIR, NORMALIZER_DIR, write_tables
 from evaluate import main as evaluate_main
 from normalize import normalize
 
@@ -26,9 +26,9 @@ def evaluate(plan, tmp_path):
     findings_path = tmp_path / "findings.json"
     input_path.write_text(json.dumps(normalize(plan, STACK)))
     code = evaluate_main([str(input_path), "--policies", str(POLICIES_DIR),
-                          "--findings", str(findings_path)])
+                          "--findings", str(findings_path), *write_tables(tmp_path)])
     findings = json.loads(findings_path.read_text())
-    assert code == (1 if findings else 0)
+    assert code == (1 if findings else 0)  # every policy is deny, so every finding blocks
     return findings
 
 

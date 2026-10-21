@@ -1,0 +1,8 @@
+# Waivers for individual findings. Granting one takes a reviewed change here plus a pin bump in the infra repo. See policies/README.md.
+#
+# - policy_id: aws.ebs.encryption_required
+#   stack: live/sandbox/ap-south-1/storage
+#   address: aws_ebs_volume.scratch
+#   reason: Throwaway volume for the Step 11 test
+#   approved_by: woofle
+#   expires: 2026-11-15    # at most 90 days from the run date

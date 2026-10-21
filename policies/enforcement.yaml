@@ -1,0 +1,17 @@
+# What each policy's findings mean. The rules always report; evaluate.py reads this table to decide what a finding does. See policies/README.md.
+#
+# level: deny (shown, fails the gate), warn (shown, does not fail), off (hidden)
+# exemptable: whether exemptions.yaml may waive this policy's findings
+# since: the date the level last changed
+aws.ebs.encryption_required:
+  level: deny
+  exemptable: true
+  since: 2026-10-10
+common.tagging.required_labels:
+  level: deny
+  exemptable: true
+  since: 2026-10-10
+common.input.schema_valid:
+  level: deny
+  exemptable: false # a broken input must never be waved through
+  since: 2026-10-18
